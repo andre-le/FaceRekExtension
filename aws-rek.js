@@ -66,6 +66,7 @@ function getImageBytes(e) {
     for (let i = 0; i < length; i++) {
         ua[i] = image.charCodeAt(i)
     }
+    console.log(String.fromCharCode.apply(null, new Uint8Array(imageBytes)))
     return imageBytes
 }
 
