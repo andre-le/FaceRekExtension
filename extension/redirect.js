@@ -33,16 +33,18 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
         if (err) console.log(err, err.stack)
         else if (data.FaceMatches.some(face => face.Similarity >= 90)) {
             document.getElementById("opResult").innerHTML = "Matched !"
-            document
+            const url = decodeURIComponent(
+                window.location.href.split("?url=")[1]
+            )
+            chrome.runtime.sendMessage(
+                { method: "updateKeys", key: url },
+                () => {
+                    window.location.href = url
+                }
+            )
         } else {
             document.getElementById("opResult").innerHTML = "No Matched !"
         }
-        data.FaceMatches.some(function(face) {
-            if (face.Similarity >= 90)
-                window.location = window.location.href.slice(
-                    window.location.href.indexOf("?url=") + 5
-                )
-        })
     })
 }
 
