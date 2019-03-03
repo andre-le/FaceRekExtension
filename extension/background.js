@@ -1,80 +1,92 @@
 chrome.webRequest.onBeforeRequest.addListener(
     async function() {
-        try {
-            configAWS()
+        chrome.tabs.update({
+            url: chrome.extension.getURL("redirect.html")
+        })
+        // try {
+        //     configAWS()
 
-            let video = document.getElementById("facerek")
-            if (!video) {
-                let video = document.createElement("video")
-                video.id = "facerek"
-                document.body.appendChild(video)
-            }
-            const mediaStream = await navigator.mediaDevices.getUserMedia({
-                video: true
-            })
-            document.getElementById("facerek").srcObject = mediaStream
-            const track = mediaStream.getVideoTracks()[0]
+        //     document.body.appendChild(document.createElement("video"))
+        //     document.body.appendChild(document.createElement("canvas"))
 
-            let imageCapture = new ImageCapture(track)
-            const tBlob = await imageCapture.takePhoto(),
-                sBlob = dataURLtoBlob(localStorage.getItem("facerek"))
-            const tReader = new FileReader(),
-                sReader = new FileReader()
+        //     const video = document.querySelector("video")
+        //     const canvas = document.querySelector("canvas")
 
-            tReader.readAsArrayBuffer(tBlob)
-            tReader.onload = async te => {
-                sReader.readAsArrayBuffer(sBlob)
-                sReader.onload = async se => {
-                    try {
-                        const rekognition = new AWS.Rekognition()
-                        const params = {
-                            SimilarityThreshold: 90,
-                            SourceImage: {
-                                Bytes: se.target.result
-                            },
-                            TargetImage: {
-                                Bytes: te.target.result
-                            }
-                        }
-                        rekognition.compareFaces(params, (err, data) => {
-                            if (err || data.FaceMatches.length === 0)
-                                throw new Error()
-                            else console.log("MATCHED !")
-                            console.log(data)
-                        })
-                    } catch (error) {
-                        chrome.tabs.getSelected(null, function(tab) {
-                            chrome.tabs.update({
-                                url:
-                                    chrome.extension.getURL("blocked.html") +
-                                    "?url=" +
-                                    encodeURIComponent(tab.url)
-                            })
-                        })
-                    }
-                }
-            }
-        } catch (error) {
-            console.log(error)
-        }
+        //     navigator.mediaDevices
+        //         .getUserMedia({ video: true })
+        //         .then(function(stream) {
+        //             video.srcObject = stream
+        //             video.play()
+        //         })
+
+        //     // const track = mediaStream.getVideoTracks()[0]
+        //     // let imageCapture = new ImageCapture(track)
+
+        //     canvas.getContext("2d").drawImage(video, 0, 0, 400, 300)
+        //     const sBytes = dataURLtoBytes(localStorage.getItem("facerek"))
+        //     const tBytes = dataURLtoBytes(canvas.toDataURL())
+
+        //     console.log(sBytes, tBytes)
+
+        //     try {
+        //         const rekognition = new AWS.Rekognition()
+        //         const params = {
+        //             SimilarityThreshold: 90,
+        //             SourceImage: {
+        //                 Bytes: sBytes
+        //             },
+        //             TargetImage: {
+        //                 Bytes: tBytes
+        //             }
+        //         }
+        //         rekognition.compareFaces(params, (err, data) => {
+        //             if (err || data.FaceMatches.length === 0) throw new Error()
+        //             else console.log("MATCHED !")
+        //             console.log(data)
+        //         })
+        //     } catch (error) {
+        //         chrome.tabs.getSelected(null, function(tab) {
+        //             chrome.tabs.update({
+        //                 url:
+        //                     chrome.extension.getURL("blocked.html") +
+        //                     "?url=" +
+        //                     encodeURIComponent(tab.url)
+        //             })
+        //         })
+        //     }
+        // } catch (error) {
+        //     console.log(error)
+        // }
     },
     { urls: ["*://www.facebook.com/*"] },
     ["blocking"]
 )
 
-function dataURLtoBlob(dataURL) {
-    let byteString = atob(dataURL.split(",")[1])
-    let mimeString = dataURL
-        .split(",")[0]
-        .split(":")[1]
-        .split(";")[0]
-    let ab = new ArrayBuffer(byteString.length)
-    let ia = new Uint8Array(ab)
-    for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i)
+function dataURLtoBytes(dataURL) {
+    const img = document.createElement("img")
+    let image = null
+    img.src = dataURL
+    let jpg = true
+    try {
+        image = atob(dataURL.split("data:image/jpeg;base64,")[1])
+    } catch (e) {
+        jpg = false
     }
-    let blob = new Blob([ab], { type: mimeString })
-    return blob
+    if (jpg == false) {
+        try {
+            image = atob(dataURL.split("data:image/png;base64,")[1])
+        } catch (e) {
+            alert("Not an image file Rekognition can process")
+            return
+        }
+    }
+    const length = image.length
+    imageBytes = new ArrayBuffer(length)
+    const ua = new Uint8Array(imageBytes)
+    for (let i = 0; i < length; i++) {
+        ua[i] = image.charCodeAt(i)
+    }
+    return imageBytes
 }
 
 function configAWS() {
