@@ -2,23 +2,44 @@
 <html>
     <head>
         <style>
-            button {
-                height: 30px;
-                width: 30px;
-                outline: none;
+            body {
+                text-align: center;
+            }
+            #logo {
+                height: 160px;
+                width: 160px;
             }
         </style>
     </head>
     <body>
-        <div id="landing">
-            <object type="text/html" data="landing.html"></object>
+        <div id="landing" style="display: none;">
+            <img id="logo" src="img/left-landing.jpg" style="float: left;" />
+            <img id="logo" src="img/logo.jpg" />
+            <button id="newProfile">Create new Profile!</button>
+            <img id="logo" src="img/right-landing.jpg" style="float: right;" />
         </div>
-        <div id="webcam" style="display: none;">
-            <button id="changeColor">button</button>
-            <video id="video" width="640" height="480" autoplay></video>
-            <button id="snap">Snap Photo</button>
-            <canvas id="canvas" width="640" height="480"></canvas>
-            <script src="popup.js"></script>
+        <div id="face" style="display: none;">
+            <h3>Capture Your Facial Identity</h3>
+            <div id="videoBlock">
+                <video id="video" width="400" height="300" autoplay></video>
+                <button id="snap">Take Photo</button>
+            </div>
+            <div id="photoBlock" style="display: none;">
+                <canvas id="canvas" width="400" height="300"></canvas>
+                <button id="save">Save</button>
+                <button id="retake">Retake</button>
+            </div>
+        </div>
+        <div id="sites" style="display: none;">
+            <h3>Add your list of blocked websites</h3>
+            <input id="input" type="text" />
+            <ul id="list"></ul>
+            <button id="add">Add</button>
+        </div>
+        <div id="confirmation" style="display: none;">
+            <h3>Your identiy has been saved</h3>
         </div>
     </body>
+    <script src="js/jquery.min.js"></script>
+    <script src="popup.js"></script>
 </html>

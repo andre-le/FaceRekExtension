@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Rekognition</title>
+    </head>
+    <body>
+        <h1>Sorry you are blocked from <span id="fromURL"></span></h1>
+        <script src="js/jquery.min.js"></script>
+        <script>
+            $("#fromURL").innerHTML = $(location).attr("href")
+        </script>
+    </body>
+</html>
