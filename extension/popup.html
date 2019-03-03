@@ -1,33 +1,24 @@
 <!DOCTYPE html>
-  <html>
+<html>
     <head>
-      <style>
-        button {
-          height: 30px;
-          width: 30px;
-          outline: none;
-        }
-      </style>
+        <style>
+            button {
+                height: 30px;
+                width: 30px;
+                outline: none;
+            }
+        </style>
     </head>
     <body>
-      <H1>Age Estimator</H1>
-      <input
-          type="file"
-          name="fileToUpload"
-          id="fileToUpload"
-          accept="image/*"
-      />
-      <p id="opResult"></p>
-
-      <button id="next">next</button>
-      <button id="back">back</button>
-      <video id="video" width="640" height="480" autoplay></video>
-      <button id="snap">Snap Photo</button>
-      <canvas id="canvas" width="640" height="480"></canvas>
+        <div id="landing">
+            <object type="text/html" data="landing.html"></object>
+        </div>
+        <div id="webcam" style="display: none;">
+            <button id="changeColor">button</button>
+            <video id="video" width="640" height="480" autoplay></video>
+            <button id="snap">Snap Photo</button>
+            <canvas id="canvas" width="640" height="480"></canvas>
+            <script src="popup.js"></script>
+        </div>
     </body>
-      <script src="popup.js"></script>
-      <script src="aws-cognito-sdk.min.js"></script>
-      <script src="amazon-cognito-identity.min.js"></script>
-      <script src="https://sdk.amazonaws.com/js/aws-sdk-2.413.0.min.js"></script>
-      <script src="aws-rek.js"></script>
-  </html>
+</html>

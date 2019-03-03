@@ -6,17 +6,29 @@
     </head>
 
     <body>
-        <H1>Age Estimator</H1>
+        <h1>Source image</h1>
         <input
             type="file"
-            name="fileToUpload"
-            id="fileToUpload"
+            name="sourceImage"
+            id="sourceImage"
             accept="image/*"
         />
+
+        <h1>Target image</h1>
+        <input
+            type="file"
+            name="targetImage"
+            id="targetImage"
+            accept="image/*"
+        />
+
+        <button onclick="processImages()">Check</button>
+
         <p id="opResult"></p>
     </body>
+
     <script src="aws-cognito-sdk.min.js"></script>
     <script src="amazon-cognito-identity.min.js"></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.413.0.min.js"></script>
-    <script src="./aws-rek.js"></script>
+    <script src="aws-rek.js"></script>
 </html>
