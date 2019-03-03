@@ -18,3 +18,13 @@ video = document.getElementById('video');
 document.getElementById("snap").addEventListener("click", function() {
 	context.drawImage(video, 0, 0, 640, 480);
 });
+
+next = document.getElementById('next');
+next.onclick = () => {
+  chrome.browserAction.setPopup({popup: "login.html"});
+}
+
+back = document.getElementById('back');
+back.onclick = () => {
+  chrome.browserAction.setPopup({popup: "popup.html"});
+}
