@@ -21,12 +21,22 @@
         </div>
         <div id="create-profile" style="display: none;">
             <h1>Create Profile</h1>
+            <button id="loadWebcam">Next</button>
         </div>
         <div id="show-password"></div>
-        <div id="webcam" style="display: none;">
+        <div id="input-face" style="display: none;">
+            <h2>Input Your Facial Identity</h2>
             <video id="video" width="640" height="480" autoplay></video>
             <button id="snap">Snap Photo</button>
             <canvas id="canvas" width="640" height="480"></canvas>
+            <button id="save-image">Save</button>
+        </div>
+        <div id="sites-list" style="display: none;">
+            <h2>Add your list of blocked websites</h2>
+            <button id="save-sites">Save</button>
+        </div>
+        <div id="confirmation" style="display: none;">
+            <h2>Your identiy has been saved</h2>
         </div>
     </body>
     <script src="popup.js"></script>

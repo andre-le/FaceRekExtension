@@ -1,8 +1,5 @@
-function loadCreateProfile() {
-    context.drawImage(video, 0, 0, 640, 480)
-}
-
 video = document.getElementById("video")
+myStorage = window.localStorage
 
 // Get access to the camera!
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -24,7 +21,28 @@ document.getElementById("snap").addEventListener("click", function() {
 })
 
 document.getElementById("loadProfile").addEventListener("click", function() {
-    console.log("x")
     $("#landing").fadeOut("slow", function() {})
     $("#create-profile").fadeIn("slow", function() {})
+})
+
+document.getElementById("loadWebcam").addEventListener("click", function() {
+    $("#create-profile").fadeOut("slow", function() {})
+    $("#input-face").fadeIn("slow", function() {})
+    // document.getElementById("webcam").innerHTML =
+    //     '<video id="video" width="640" height="480" autoplay></video>'
+})
+
+document.getElementById("save-image").addEventListener("click", function() {
+    //chrome.storage.sync.set({ image: canvas.toDataURL() }, function() {})
+    localStorage.setItem("image", canvas.toDataURL())
+    $("#input-face").fadeOut("slow", function() {})
+    $("#sites-list").fadeIn("slow", function() {})
+})
+
+document.getElementById("save-sites").addEventListener("click", function() {
+    var newImg = document.createElement("img") // create img tag
+    newImg.src = localStorage.getItem("image")
+    document.getElementById("confirmation").appendChild(newImg)
+    $("#sites-list").fadeOut("slow", function() {})
+    $("#confirmation").fadeIn("slow", function() {})
 })
