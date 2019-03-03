@@ -41,6 +41,7 @@ chrome.webRequest.onBeforeRequest.addListener(
                     rekognition.compareFaces(params, (err, data) => {
                         if (err) console.log(err)
                         if (
+                            !data.FaceMatches ||
                             !data.FaceMatches.some(
                                 face => face.Similarity >= 90
                             )
