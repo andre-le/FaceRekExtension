@@ -18,31 +18,31 @@
                 width: 200px;
             }
         </style>
-
     </head>
     <body>
         <div id="landing" style="display: none;">
-
             <img id="logo" src="img/logo.jpg" />
             <button id="newProfile">Create new Profile!</button>
-
         </div>
         <div id="face" style="display: none;">
             <h3>Capture Your Facial Identity</h3>
             <div id="videoBlock">
-                <video id="video" width="200" height="200" autoplay></video>
+                <video id="video" width="400" height="300" autoplay></video>
                 <button id="snap">Take Photo</button>
             </div>
             <div id="photoBlock" style="display: none;">
-                <canvas id="canvas" width="200" height="200"></canvas>
+                <canvas id="canvas" width="400" height="300"></canvas>
                 <button id="save">Save</button>
                 <button id="retake">Retake</button>
             </div>
             <div id="passwordBlock" style="display: none;">
-                Enter a passcode: <input type="password" id="pass1"> <br>
-                Confirm the passcode: <input type="password" id="pass2"> <br>
+                Enter a passcode: <input type="password" id="pass1" /> <br />
+                Confirm the passcode: <input type="password" id="pass2" />
+                <br />
                 <button id="savePassword">Save</button>
-                <p id="error" style="display: none;">The passwords don't match or empty</p>
+                <p id="error" style="display: none;">
+                    The passwords don't match or empty
+                </p>
             </div>
         </div>
         <div id="sites" style="display: none;">
