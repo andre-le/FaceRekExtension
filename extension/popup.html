@@ -28,19 +28,21 @@
             <h3>Capture Your Facial Identity</h3>
             <div id="videoBlock">
                 <video id="video" width="400" height="300" autoplay></video>
-                <button id="snap">Take Photo</button>
+                <button id="snap" style="margin-top: 1em;">Take Photo</button>
             </div>
             <div id="photoBlock" style="display: none;">
                 <canvas id="canvas" width="400" height="300"></canvas>
-                <button id="save">Save</button>
-                <button id="retake">Retake</button>
+                <div style="margin-top: 1em;">
+                    <button id="save">Save</button>
+                    <button id="retake">Retake</button>
+                </div>
             </div>
             <div id="passwordBlock" style="display: none;">
                 Enter a passcode: <input type="password" id="pass1" /> <br />
                 Confirm the passcode: <input type="password" id="pass2" />
                 <br />
-                <button id="savePassword">Save</button>
-                <p id="error" style="display: none;">
+                <button id="savePassword" style="margin-top: 1em;">Save</button>
+                <p id="error" style="display: none; margin-top: 1em;">
                     The passwords don't match or empty
                 </p>
             </div>
