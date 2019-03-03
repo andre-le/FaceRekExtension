@@ -1,20 +1,33 @@
 {
-   "name": "Face rek extension",
-   "version": "1.0",
-   "description": "Rek face",
-   "permissions": ["declarativeContent", "storage", "videoCapture"],
-   "background": {
-      "scripts": ["background.js"],
-      "persistent": false
+    "name": "FaceRek",
+    "version": "1.0",
+    "description": "Face Recognition Extension",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "declarativeContent",
+        "storage",
+        "videoCapture",
+        "activeTab",
+        "<all_urls>"
+    ],
+    "background": {
+        "scripts": [
+            "js/aws-sdk.min.js",
+            "js/aws-cognito-sdk.min.js",
+            "js/amazon-cognito-identity.min.js",
+            "background.js"
+        ],
+        "persistent": true
     },
-   "browser_action": {
-      "default_popup": "popup.html"
+    "browser_action": {
+        "default_popup": "popup.html"
     },
     "options_ui": {
-      "page": "options.html",
-      "chrome_style": true,
-      "open_in_tab": true
+        "page": "options.html",
+        "chrome_style": true,
+        "open_in_tab": true
     },
-   "options_page": "options.html",
-   "manifest_version": 2
- }
+    "options_page": "options.html",
+    "manifest_version": 2
+}
