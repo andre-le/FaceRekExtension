@@ -9,7 +9,6 @@ chrome.webRequest.onBeforeRequest.addListener(
                 video.id = "facerek"
                 document.body.appendChild(video)
             }
-
             const mediaStream = await navigator.mediaDevices.getUserMedia({
                 video: true
             })
@@ -17,43 +16,42 @@ chrome.webRequest.onBeforeRequest.addListener(
             const track = mediaStream.getVideoTracks()[0]
 
             let imageCapture = new ImageCapture(track)
-            const blob1 = await imageCapture.takePhoto()
-            const reader1 = new FileReader()
+            const tBlob = await imageCapture.takePhoto(),
+                sBlob = dataURLtoBlob(localStorage.getItem("facerek"))
+            const tReader = new FileReader(),
+                sReader = new FileReader()
 
-            reader1.readAsArrayBuffer(blob1)
-            reader1.onload = async e1 => {
-                const blob2 = await imageCapture.takePhoto()
-                const reader2 = new FileReader()
-
-                reader2.readAsArrayBuffer(blob2)
-                reader2.onload = e2 => {
-                    const rekognition = new AWS.Rekognition()
-                    const params = {
-                        SimilarityThreshold: 90,
-                        SourceImage: {
-                            Bytes: e1.target.result
-                        },
-                        TargetImage: {
-                            Bytes: e2.target.result
+            tReader.readAsArrayBuffer(tBlob)
+            tReader.onload = async te => {
+                sReader.readAsArrayBuffer(sBlob)
+                sReader.onload = async se => {
+                    try {
+                        const rekognition = new AWS.Rekognition()
+                        const params = {
+                            SimilarityThreshold: 90,
+                            SourceImage: {
+                                Bytes: se.target.result
+                            },
+                            TargetImage: {
+                                Bytes: te.target.result
+                            }
                         }
-                    }
-
-                    rekognition.compareFaces(params, (err, data) => {
-                        if (err) console.log(err)
-                        if (
-                            !data.FaceMatches ||
-                            !data.FaceMatches.some(
-                                face => face.Similarity >= 90
-                            )
-                        )
+                        rekognition.compareFaces(params, (err, data) => {
+                            if (err || data.FaceMatches.length === 0)
+                                throw new Error()
+                            else console.log("MATCHED !")
+                            console.log(data)
+                        })
+                    } catch (error) {
+                        chrome.tabs.getSelected(null, function(tab) {
                             chrome.tabs.update({
                                 url:
                                     chrome.extension.getURL("blocked.html") +
                                     "?url=" +
-                                    encodeURIComponent(url)
+                                    encodeURIComponent(tab.url)
                             })
-                        else console.log("MATCHED !")
-                    })
+                        })
+                    }
                 }
             }
         } catch (error) {
@@ -63,6 +61,21 @@ chrome.webRequest.onBeforeRequest.addListener(
     { urls: ["*://www.facebook.com/*"] },
     ["blocking"]
 )
+
+function dataURLtoBlob(dataURL) {
+    let byteString = atob(dataURL.split(",")[1])
+    let mimeString = dataURL
+        .split(",")[0]
+        .split(":")[1]
+        .split(";")[0]
+    let ab = new ArrayBuffer(byteString.length)
+    let ia = new Uint8Array(ab)
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i)
+    }
+    let blob = new Blob([ab], { type: mimeString })
+    return blob
+}
 
 function configAWS() {
     AWS.config.region = "us-east-1"
