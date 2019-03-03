@@ -5,8 +5,3 @@ navigator.webkitGetUserMedia(
     },
     function(err) {}
 )
-
-function load_landing() {
-    // document.getElementById("landing").innerHTML =
-    //     '<object type="text/html" data="landing.html" ></object>'
-}
