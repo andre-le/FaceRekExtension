@@ -41,9 +41,17 @@ $("#add").click(function() {
     $("#list").append("<li>" + add + "</li>")
 })
 
-// document.getElementById("loadWebcam").addEventListener("click", function() {
-//     $("#create-profile").fadeOut("slow", function() {})
-//     $("#face").fadeIn("slow", function() {})
-//     // document.getElementById("webcam").innerHTML =
-//     //     '<video id="video" width="640" height="480" autoplay></video>'
-// })face
+// Trigger photo take
+document.getElementById("snap").addEventListener("click", function() {
+	context.drawImage(video, 0, 0, 640, 480);
+});
+
+next = document.getElementById('next');
+next.onclick = () => {
+  chrome.browserAction.setPopup({popup: "login.html"});
+}
+
+back = document.getElementById('back');
+back.onclick = () => {
+  chrome.browserAction.setPopup({popup: "popup.html"});
+}
