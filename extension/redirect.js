@@ -10,6 +10,8 @@ navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
 $("#snap").click(function() {
     configAWS()
     context.drawImage(video, 0, 0, 400, 300)
+    $("#video").hide()
+    $("#canvas").show()
     const sBytes = dataURLtoBytes(localStorage.getItem("facerek"))
     const tBytes = dataURLtoBytes(canvas.toDataURL())
     compareFaces(sBytes, tBytes)
@@ -29,12 +31,11 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
     }
     rekognition.compareFaces(params, function(err, data) {
         if (err) console.log(err, err.stack)
-        else {
-            document.getElementById(
-                "opResult"
-            ).innerHTML = data.FaceMatches.some(face => face.Similarity >= 90)
-                ? "Matched !"
-                : "No Matched"
+        else if (data.FaceMatches.some(face => face.Similarity >= 90)) {
+            document.getElementById("opResult").innerHTML = "Matched !"
+            document
+        } else {
+            document.getElementById("opResult").innerHTML = "No Matched !"
         }
     })
 }

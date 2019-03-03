@@ -4,14 +4,21 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>Document</title>
+        <title>FaceRek</title>
     </head>
-    <body>
-        <h1>Source image</h1>
+    <body
+        style="display:flex; flex-direction: column; justify-content: center; align-items: center;"
+    >
+        <h1>Who are you?</h1>
         <video id="video" width="400" height="300" autoplay></video>
-        <canvas id="canvas" width="400" height="300"></canvas>
-        <button id="snap">Take Photo</button>
-        <p id="opResult"></p>
+        <canvas
+            id="canvas"
+            width="400"
+            height="300"
+            style="display: none;"
+        ></canvas>
+        <button id="snap" style="margin-top: 1em;">Take Photo</button>
+        <h3 id="opResult"></h3>
         <script src="js/jquery.min.js"></script>
         <script src="js/aws-sdk.min.js"></script>
         <script src="redirect.js"></script>
