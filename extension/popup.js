@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas")
 const video = document.getElementById("video")
 const context = canvas.getContext("2d")
+const blockedWebsites = []
 
 if (localStorage.getItem("facerek")) $("#sites").show()
 else $("#landing").show()
@@ -38,7 +39,36 @@ $("#retake").click(function() {
 
 $("#add").click(function() {
     let add = $("#input").val()
-    $("#list").append("<li>" + add + "</li>")
+    blockedWebsites.push(add)
+    $("input:text").val("")
+    $("#list").append(
+        "<li>" + add + "<button class='remove'>\u00D7</button></li>"
+    )
+    $(".remove").click(function() {
+        blockedWebsites = blockedWebsites.filter(
+            item =>
+                item !==
+                $(this)
+                    .parent()
+                    .val()
+        )
+        $(this)
+            .parent()
+            .toggleClass("strike")
+            .fadeOut("slow")
+    })
+})
+
+$("#finish").click(function() {
+    localStorage.setItem("sites", blockedWebsites)
+    $("#rekImage").attr("src", localStorage.getItem("facerek"))
+    $("#sites").fadeOut(function() {
+        $("#confirmation").fadeIn()
+    })
+    var arrayLength = blockedWebsites.length
+    for (var i = 0; i < arrayLength; i++) {
+        $("#listFinal").append("<li>" + blockedWebsites[i] + "</li>")
+    }
 })
 
 // document.getElementById("loadWebcam").addEventListener("click", function() {
