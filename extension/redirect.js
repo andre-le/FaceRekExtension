@@ -44,6 +44,8 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
             )
         } else {
             document.getElementById("opResult").innerHTML = "No Matched !"
+            $("#video").show()
+            $("#canvas").hide()
         }
     })
 }
