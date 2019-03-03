@@ -33,7 +33,7 @@ $("#newProfile").click(function() {
 })
 
 $("#snap").click(function() {
-    context.drawImage(video, 0, 0, 200, 200)
+    context.drawImage(video, 0, 0, 400, 300)
     $("#videoBlock").hide()
     $("#photoBlock").show()
 })
