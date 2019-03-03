@@ -84,7 +84,10 @@ $("#add").click(function() {
             .parent()
             .toggleClass("strike")
             .fadeOut("slow")
-    })
+    });
+    chrome.runtime.sendMessage(
+        { method: "updateBlocks", key: blockedWebsites }
+    );
 })
 
 $("#finish").click(function() {
