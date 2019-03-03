@@ -17,7 +17,8 @@
             "js/aws-sdk.min.js",
             "js/aws-cognito-sdk.min.js",
             "js/amazon-cognito-identity.min.js",
-            "background.js"
+            "background.js",
+
         ],
         "persistent": true
     },
