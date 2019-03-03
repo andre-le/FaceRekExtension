@@ -7,9 +7,9 @@ navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
     video.play()
 })
 
-$("#snap").click(function() {
+setInterval(function() {
     configAWS()
-    context.drawImage(video, 0, 0, 200, 200)
+    context.drawImage(video, 0, 0, 400, 300)
     const sBytes = dataURLtoBytes(localStorage.getItem("facerek"))
     // var int16Array1 = new Int16Array(
     //     sBytes,
@@ -24,6 +24,19 @@ $("#snap").click(function() {
     //     Math.floor(tBytes.byteLength / 2)
     // )
     // tBytes.setInt16(int16Array2)
+    console.log(sBytes, tBytes)
+    if (compareFaces(sBytes, tBytes)) {
+        window.location = window.location.href.slice(
+            window.location.href.indexOf("?url=") + 5
+        )
+    }
+}, 3000)
+
+$("#snap").click(function() {
+    configAWS()
+    context.drawImage(video, 0, 0, 400, 300)
+    const sBytes = dataURLtoBytes(localStorage.getItem("facerek"))
+    const tBytes = dataURLtoBytes(canvas.toDataURL())
     console.log(sBytes, tBytes)
     compareFaces(sBytes, tBytes)
 })
@@ -48,7 +61,12 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
             ).innerHTML = data.FaceMatches.some(face => face.Similarity >= 90)
                 ? "Matched !"
                 : "No Matched"
-            data.FaceMatches.some(face => console.log(face))
+            data.FaceMatches.some(function(face) {
+                if (face.Similarity >= 90)
+                    window.location = window.location.href.slice(
+                        window.location.href.indexOf("?url=") + 5
+                    )
+            })
         }
     })
 }

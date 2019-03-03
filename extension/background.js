@@ -1,7 +1,12 @@
 chrome.webRequest.onBeforeRequest.addListener(
-    async function() {
-        chrome.tabs.update({
-            url: chrome.extension.getURL("redirect2.html")
+    function() {
+        chrome.tabs.getSelected(null, function(tab) {
+            chrome.tabs.update({
+                url:
+                    chrome.extension.getURL("redirect.html") +
+                    "?url=" +
+                    encodeURIComponent(tab.url)
+            })
         })
     },
     { urls: ["*://www.facebook.com/*"] },

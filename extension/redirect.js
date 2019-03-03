@@ -37,6 +37,12 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
         } else {
             document.getElementById("opResult").innerHTML = "No Matched !"
         }
+        data.FaceMatches.some(function(face) {
+            if (face.Similarity >= 90)
+                window.location = window.location.href.slice(
+                    window.location.href.indexOf("?url=") + 5
+                )
+        })
     })
 }
 
