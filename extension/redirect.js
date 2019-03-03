@@ -9,7 +9,7 @@ navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
 
 $("#snap").click(function() {
     configAWS()
-    context.drawImage(video, 0, 0, 400, 300)
+    context.drawImage(video, 0, 0, 200, 200)
     const sBytes = dataURLtoBytes(localStorage.getItem("facerek"))
     // var int16Array1 = new Int16Array(
     //     sBytes,
@@ -47,7 +47,8 @@ function compareFaces(sourceImageBytes, targetImageBytes) {
                 "opResult"
             ).innerHTML = data.FaceMatches.some(face => face.Similarity >= 90)
                 ? "Matched !"
-                : "No Matched"
+                : "No Matched";
+            data.FaceMatches.some(face => console.log(face));
         }
     })
 }
